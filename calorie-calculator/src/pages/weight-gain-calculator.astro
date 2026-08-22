@@ -1,0 +1,849 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+ 
+<Layout
+  title="Weight Gain Calorie Calculator - Calculate Your Surplus | CalorieAce"
+  description="Calculate exactly how many calories to eat per day to gain weight and build muscle healthily. Get a personalized calorie surplus, weight gain timeline, and meal plan based on your age, weight, height, and activity level."
+>
+  <main class="max-w-2xl mx-auto px-4 py-10">
+ 
+    <!-- ============ SECTION 1: PAGE HEADER (SEO: H1 + intro copy) ============ -->
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-charcoal leading-tight">
+      Weight Gain <span class="text-forest">Calorie Calculator</span>
+    </h1>
+ 
+    <p class="mt-3 font-body text-lg text-gray-soft max-w-lg">
+      Find out exactly how many calories you should eat per day to gain weight steadily and healthily.
+    </p>
+ 
+    <section class="mt-8 p-8 bg-white rounded-2xl shadow-[0_2px_24px_rgba(26,26,24,0.06)] border border-forest-light" aria-label="Weight gain calorie calculator form">
+ 
+      <!-- ============ SECTION 2: CALCULATOR FORM ============ -->
+      <form id="calorie-form" class="space-y-4">
+ 
+        <!-- Metric / Imperial toggle -->
+        <div class="flex gap-1 p-1 bg-forest-light rounded-full">
+          <button type="button" id="unit-metric-btn" class="unit-toggle-btn touch-manipulation flex-1 px-4 py-2 text-sm font-semibold rounded-full bg-forest text-cream transition-colors">Metric (Kg / Cm)</button>
+          <button type="button" id="unit-imperial-btn" class="unit-toggle-btn touch-manipulation flex-1 px-4 py-2 text-sm font-semibold rounded-full text-gray-soft transition-colors">Imperial (Lb / Ft)</button>
+        </div>
+ 
+        <!-- Gender -->
+        <div>
+          <label class="block text-xs font-semibold tracking-wide text-gray-soft uppercase">Biological Sex</label>
+          <div class="mt-2 flex gap-2">
+            <button type="button" id="gender-male-btn" class="gender-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest text-cream transition-colors">Male</button>
+            <button type="button" id="gender-female-btn" class="gender-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest-light text-charcoal transition-colors">Female</button>
+          </div>
+          <input type="hidden" id="gender" value="male" />
+        </div>
+ 
+        <div>
+          <label for="age" class="block text-sm font-medium text-charcoal/80">Age (years)</label>
+          <input type="number" id="age" value="25" min="1" max="120" inputmode="numeric" class="mt-1.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+        </div>
+ 
+        <div>
+          <label for="weight" class="block text-sm font-medium text-charcoal/80">
+            Weight (<span id="weight-unit-label">kg</span>)
+          </label>
+          <input type="number" id="weight" value="60" min="1" inputmode="decimal" class="mt-1.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+        </div>
+ 
+        <div>
+          <label class="block text-sm font-medium text-charcoal/80" id="height-label">Height (cm)</label>
+ 
+          <div id="height-cm-input" class="mt-1.5">
+            <input type="number" id="height" value="170" min="1" inputmode="decimal" class="block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+          </div>
+ 
+          <div id="height-ftin-input" class="mt-1.5 hidden grid grid-cols-2 gap-2">
+            <div>
+              <span class="text-xs text-gray-soft">Feet</span>
+              <input type="number" id="height-feet" min="0" value="5" inputmode="numeric" class="mt-0.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+            </div>
+            <div>
+              <span class="text-xs text-gray-soft">Inches</span>
+              <input type="number" id="height-inches" min="0" max="11" value="7" inputmode="numeric" class="mt-0.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+            </div>
+          </div>
+        </div>
+ 
+        <div>
+          <label for="activity" class="block text-sm font-medium text-charcoal/80">Activity Level</label>
+          <select id="activity" class="mt-1.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest">
+            <option value="1.2">Sedentary (little or no exercise)</option>
+            <option value="1.375">Light (exercise 1-3 days/week)</option>
+            <option value="1.55">Moderate (exercise 3-5 days/week)</option>
+            <option value="1.725">Active (exercise 6-7 days/week)</option>
+            <option value="1.9">Very Active (hard exercise daily)</option>
+          </select>
+        </div>
+ 
+        <div>
+          <label for="surplus" class="block text-sm font-medium text-charcoal/80">Weight Gain Speed</label>
+          <select id="surplus" class="mt-1.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest">
+            <option value="250">Gradual (0.25 kg/week)</option>
+            <option value="500" selected>Moderate (0.5 kg/week) - Recommended</option>
+            <option value="750">Fast (0.75 kg/week)</option>
+          </select>
+        </div>
+ 
+        <button type="submit" class="touch-manipulation w-full bg-forest text-cream font-body font-semibold py-3 rounded-lg hover:bg-forest-dark transition-colors">
+          Calculate My Weight Gain Calories
+        </button>
+      </form>
+ 
+      <!-- ============ SECTION 3: CALCULATOR RESULT ============ -->
+      <div id="result" class="mt-8 hidden scroll-mt-24">
+        <div class="flex flex-col items-center">
+          <div class="relative w-40 h-40">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#E8F0E9" stroke-width="8" />
+              <circle
+                id="gauge-circle"
+                cx="50" cy="50" r="42" fill="none"
+                stroke="#2F6B4F" stroke-width="8"
+                stroke-linecap="round"
+                stroke-dasharray="264"
+                stroke-dashoffset="264"
+                style="transition: stroke-dashoffset 1s ease-out;"
+              />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span id="result-value" class="font-heading text-2xl font-bold text-forest">0</span>
+              <span class="font-body text-xs text-gray-soft mt-1">calories/day</span>
+            </div>
+          </div>
+          <p class="mt-2 font-body text-sm text-gray-soft text-center">to gain weight</p>
+        </div>
+
+        <div class="mt-5 bg-forest-light rounded-xl p-4 text-center">
+          <p class="text-xs font-semibold text-gray-soft uppercase">Maintenance Level</p>
+          <p class="mt-1 font-heading text-lg font-bold text-charcoal"><span id="maintenance-value">0</span> cal/day</p>
+        </div>
+      </div>
+ 
+      <!-- ============ SECTION 4: ROADMAP CTA (shown only after a calculation) ============ -->
+      <div id="roadmap-cta" class="mt-6 hidden p-5 bg-forest-light rounded-xl border border-forest-light">
+        <h3 class="font-heading text-lg font-semibold text-forest">Want a Personalized Roadmap?</h3>
+        <p class="mt-1 font-body text-sm text-charcoal/70">
+          You already know your daily calorie target. Get a step-by-step plan to reach your goal.
+        </p>
+        <ul class="mt-2 font-body text-sm text-charcoal/70 space-y-0.5">
+          <li>✓ Personalized meal plan</li>
+          <li>✓ Weight milestones</li>
+          <li>✓ Estimated timeline</li>
+          <li>✓ Progress tracker</li>
+        </ul>
+        <button type="button" id="roadmap-cta-btn" class="touch-manipulation mt-4 w-full bg-forest text-cream font-body font-semibold py-3 rounded-lg hover:bg-forest-dark transition-colors">
+          Create My Roadmap
+        </button>
+      </div>
+ 
+      <!-- ============ SECTION 5: ROADMAP INTAKE (only new questions) ============ -->
+      <div id="roadmap-intake" class="mt-6 hidden p-5 bg-white rounded-xl border border-forest-light">
+        <h3 class="font-heading text-lg font-semibold text-forest">A couple more details</h3>
+ 
+        <div class="mt-3">
+          <label for="roadmap-target-weight" class="block text-sm font-medium text-charcoal/80">
+            Target Weight (<span id="roadmap-target-weight-unit-label">kg</span>)
+          </label>
+          <input type="number" id="roadmap-target-weight" min="1" inputmode="decimal" placeholder="e.g. 70" class="mt-1.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+          <p id="roadmap-target-weight-error" class="mt-1 font-body text-xs text-amber-600 hidden">
+            Enter a target weight higher than your current weight.
+          </p>
+          <p id="roadmap-target-weight-danger" class="mt-1 font-body text-xs text-red-600 font-medium hidden">
+            This target isn't medically safe to plan for. Please consult a doctor or registered dietitian before pursuing a weight-gain goal this extreme.
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <label for="roadmap-timeframe" class="block text-sm font-medium text-charcoal/80">
+            Timeframe (weeks) <span class="font-normal text-charcoal/50">— optional</span>
+          </label>
+          <input type="number" id="roadmap-timeframe" min="1" inputmode="numeric" placeholder="e.g. 12" class="mt-1.5 block w-full rounded-lg border-gray-200 bg-cream focus:border-forest focus:ring-forest" />
+          <p class="mt-1 font-body text-xs text-charcoal/50">
+            Leave blank to use the pace from your gain speed choice above.
+          </p>
+          <p id="roadmap-timeframe-warning" class="mt-1 font-body text-xs text-amber-600 hidden"></p>
+        </div>
+ 
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-charcoal/80">Diet preference</label>
+          <div class="mt-1.5 flex gap-2">
+            <button type="button" id="diet-veg-btn" class="diet-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest text-cream transition-colors">Vegetarian</button>
+            <button type="button" id="diet-nonveg-btn" class="diet-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest-light text-charcoal transition-colors">Non-vegetarian</button>
+          </div>
+          <input type="hidden" id="diet-preference" value="veg" />
+        </div>
+
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-charcoal/80">Meal style</label>
+          <div class="mt-1.5 flex gap-2">
+            <button type="button" id="region-asian-btn" class="region-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest text-cream transition-colors"> Asian</button>
+            <button type="button" id="region-western-btn" class="region-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest-light text-charcoal transition-colors">Western</button>
+          </div>
+          <input type="hidden" id="meal-region" value="asian" />
+        </div>
+ 
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-charcoal/80">Meals per day</label>
+          <div class="mt-1.5 flex gap-2">
+            <button type="button" id="meals-3-btn" class="meals-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest text-cream transition-colors">3 meals</button>
+            <button type="button" id="meals-4-btn" class="meals-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest-light text-charcoal transition-colors">4 meals</button>
+            <button type="button" id="meals-5-btn" class="meals-btn touch-manipulation flex-1 py-2.5 rounded-lg font-semibold text-sm bg-forest-light text-charcoal transition-colors">5 meals</button>
+          </div>
+          <input type="hidden" id="meals-per-day" value="3" />
+        </div>
+ 
+        <button type="button" id="roadmap-generate-btn" class="touch-manipulation mt-4 w-full bg-forest text-cream font-body font-semibold py-3 rounded-lg hover:bg-forest-dark transition-colors">
+          Generate My Roadmap
+        </button>
+      </div>
+ 
+      <!-- ============ SECTION 6: ROADMAP RESULT PANEL ============ -->
+      <div id="roadmap-panel" class="mt-6 hidden p-5 bg-white rounded-xl border border-forest-light">
+        <button type="button" id="roadmap-back-btn" class="touch-manipulation font-body text-sm text-forest hover:underline">&larr; Back to Calculator</button>
+ 
+        <h3 class="mt-3 font-heading text-xl font-semibold text-forest">Your Weight Gain Roadmap</h3>
+        <p id="rm-warning" class="mt-2 font-body text-sm text-amber-600 hidden"></p>
+ 
+        <div class="mt-3 grid grid-cols-2 gap-3 font-body text-sm">
+          <div class="bg-forest-light rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Current</p>
+            <p id="rm-current" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-forest-light rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Target</p>
+            <p id="rm-target" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-forest-light rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Total to gain</p>
+            <p id="rm-total" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-forest-light rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Est. timeframe</p>
+            <p id="rm-timeframe" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-forest-light rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Daily calories</p>
+            <p id="rm-calories" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-forest-light rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Daily protein</p>
+            <p id="rm-protein" class="font-semibold text-charcoal"></p>
+          </div>
+        </div>
+ 
+        <h4 class="mt-5 font-heading font-semibold text-charcoal">Milestones</h4>
+        <ul id="rm-milestones" class="mt-2 font-body text-sm text-charcoal/80 space-y-1"></ul>
+ 
+        <h4 class="mt-5 font-heading font-semibold text-charcoal">Sample Meal Plan</h4>
+        <div id="rm-mealplan" class="mt-2 font-body text-sm text-charcoal/80 space-y-3"></div>
+ 
+        <p class="mt-4 font-body text-xs text-gray-soft">
+          These numbers are estimates for general informational purposes, not medical advice. For extreme goals or health conditions, please consult a qualified healthcare professional or registered dietitian.
+        </p>
+        <p class="mt-1 font-body text-xs text-gray-soft">
+          Calorie estimates use the Mifflin-St Jeor equation, published in the
+          <a href="https://pubmed.ncbi.nlm.nih.gov/2305711/" target="_blank" rel="noopener noreferrer" class="underline hover:text-forest">American Journal of Clinical Nutrition (1990)</a>.
+        </p>
+ 
+        <!-- Track Progress lives on its own page: /progress -->
+        <a href="/progress" class="touch-manipulation mt-6 block text-center w-full bg-forest-light text-forest-dark font-body font-semibold py-3 rounded-lg hover:bg-forest hover:text-cream transition-colors">
+          Track Your Progress →
+        </a>
+      </div>
+    </section>
+ 
+    <!-- ============ SECTION 7: HERO IMAGE ============ -->
+    <img src="/weight-gain.webp" alt="Illustration representing healthy weight gain through calorie surplus" class="w-full max-w-2xl mx-auto rounded-2xl mt-10" width="1200" height="630" loading="lazy" />
+ 
+    <!-- ============ SECTION 8: HOW IT WORKS (SEO content) ============ -->
+    <section class="mt-12">
+      <h2 class="font-heading text-2xl font-bold text-charcoal">
+        How this calculator works
+      </h2>
+      <p class="mt-2 font-body text-gray-soft">
+        We first calculate your maintenance calories (TDEE) using the Mifflin-St Jeor formula, then add your chosen daily surplus. A surplus of 300 to 500 calories per day supports steady, healthy weight gain without excessive fat gain.
+      </p>
+    </section>
+ 
+    <!-- ============ SECTION 9: FAQ (SEO content + schema) ============ -->
+    <section class="mt-12">
+      <h2 class="font-heading text-2xl font-bold text-charcoal">Frequently Asked Questions</h2>
+ 
+      <div class="mt-4 space-y-2" id="faq-accordion">
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>How many extra calories do I need to gain weight?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              A surplus of 300 to 500 calories above your maintenance level per day supports steady, healthy weight gain.
+            </p>
+          </div>
+        </div>
+ 
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>How long does it take to gain 1 kg?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              Since 1 kg of body weight is roughly 7,700 calories, a 500-calorie daily surplus takes about 15 to 16 days to gain 1 kg.
+            </p>
+          </div>
+        </div>
+ 
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>Should I combine this with strength training?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              Yes, pairing a calorie surplus with resistance training helps ensure the weight gained is more muscle and less fat.
+            </p>
+          </div>
+        </div>
+
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>How do I know how much weight I actually need to gain?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              A common starting point is picking a target weight that puts you in a healthy BMI range (roughly 18.5–24.9), then subtracting your current weight from that. Enter a target weight in the Roadmap section above and we'll calculate the total and a safe timeline for you automatically.
+            </p>
+          </div>
+        </div>
+
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>Why am I not gaining weight even in a calorie surplus?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              The most common reason is underestimating intake — many people eat more or less than they think without tracking. If the scale isn't moving after 2–3 weeks, it usually means your actual surplus is smaller than calculated, so increase your target calories by 100–200 and reassess.
+            </p>
+          </div>
+        </div>
+
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>Is it possible to gain weight without gaining fat?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              Not entirely — some fat gain is a normal part of a calorie surplus. But keeping the surplus modest (around 300–500 calories) and pairing it with resistance training shifts the ratio strongly toward muscle rather than fat, compared to a large, untrained surplus.
+            </p>
+          </div>
+        </div>
+
+        <div class="border border-forest-light rounded-xl bg-white">
+          <button type="button" class="faq-question w-full flex justify-between items-center text-left p-4 font-body font-medium text-charcoal">
+            <span>How long will it take to reach my goal weight?</span>
+            <span class="faq-icon text-forest transition-transform">&#9660;</span>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4">
+            <p class="font-body text-gray-soft">
+              It depends on how much you have to gain and how fast you choose to gain it — a larger total takes proportionally longer at any given safe weekly rate. Use the Roadmap feature above to get a personalized estimate along with milestones and a meal plan.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+ 
+<!-- SCRIPT 1: FAQ JSON-LD SCHEMA (SEO — do not remove) -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many extra calories do I need to gain weight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A surplus of 300 to 500 calories above maintenance per day supports steady, healthy weight gain."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to gain 1 kg?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Since 1 kg of body weight is roughly 7,700 calories, a 500-calorie daily surplus takes about 15 to 16 days to gain 1 kg."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I combine this with strength training?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, pairing a calorie surplus with resistance training helps ensure the weight gained is more muscle and less fat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know how much weight I actually need to gain?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pick a target weight that puts you in a healthy BMI range (roughly 18.5 to 24.9), then subtract your current weight from that."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why am I not gaining weight even in a calorie surplus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common reason is underestimating intake; if the scale is not moving after 2 to 3 weeks, increase your target calories by 100 to 200."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it possible to gain weight without gaining fat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not entirely, but a modest surplus paired with resistance training shifts the ratio strongly toward muscle rather than fat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long will it take to reach my goal weight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on your total weight to gain and your chosen weekly rate; a larger total takes proportionally longer."
+      }
+    }
+  ]
+})}>
+</script>
+ 
+<!-- SCRIPT 2: CALCULATOR LOGIC (units, gender, BMR/TDEE, submit + auto-scroll) -->
+<script>
+  let currentUnitSystem: 'metric' | 'imperial' = 'metric';
+ 
+  const form = document.getElementById('calorie-form') as HTMLFormElement;
+  const resultBox = document.getElementById('result') as HTMLDivElement;
+  const resultValue = document.getElementById('result-value') as HTMLSpanElement;
+  const maintenanceValue = document.getElementById('maintenance-value') as HTMLSpanElement;
+ 
+  const metricBtn = document.getElementById('unit-metric-btn') as HTMLButtonElement;
+  const imperialBtn = document.getElementById('unit-imperial-btn') as HTMLButtonElement;
+  const weightUnitLabel = document.getElementById('weight-unit-label') as HTMLSpanElement;
+  const heightLabel = document.getElementById('height-label') as HTMLLabelElement;
+  const heightCmInput = document.getElementById('height-cm-input') as HTMLDivElement;
+  const heightFtinInput = document.getElementById('height-ftin-input') as HTMLDivElement;
+  const weightInput = document.getElementById('weight') as HTMLInputElement;
+  const roadmapCta = document.getElementById('roadmap-cta') as HTMLDivElement;
+ 
+  // --- Unit toggle (Metric / Imperial) ---
+  function setUnitSystem(system: 'metric' | 'imperial') {
+    currentUnitSystem = system;
+ 
+    if (system === 'metric') {
+      metricBtn.classList.add('bg-forest', 'text-cream');
+      metricBtn.classList.remove('text-gray-soft');
+      imperialBtn.classList.remove('bg-forest', 'text-cream');
+      imperialBtn.classList.add('text-gray-soft');
+ 
+      weightUnitLabel.textContent = 'kg';
+      heightLabel.textContent = 'Height (cm)';
+      heightCmInput.classList.remove('hidden');
+      heightFtinInput.classList.add('hidden');
+      weightInput.value = '60';
+    } else {
+      imperialBtn.classList.add('bg-forest', 'text-cream');
+      imperialBtn.classList.remove('text-gray-soft');
+      metricBtn.classList.remove('bg-forest', 'text-cream');
+      metricBtn.classList.add('text-gray-soft');
+ 
+      weightUnitLabel.textContent = 'lb';
+      heightLabel.textContent = 'Height';
+      heightCmInput.classList.add('hidden');
+      heightFtinInput.classList.remove('hidden');
+      weightInput.value = '132';
+    }
+  }
+ 
+  metricBtn.addEventListener('click', () => setUnitSystem('metric'));
+  imperialBtn.addEventListener('click', () => setUnitSystem('imperial'));
+ 
+  // --- Gender toggle ---
+  const genderBtns = document.querySelectorAll('.gender-btn') as NodeListOf<HTMLButtonElement>;
+  const genderInput = document.getElementById('gender') as HTMLInputElement;
+ 
+  function selectGender(clicked: HTMLButtonElement, value: string) {
+    genderBtns.forEach((b) => {
+      b.classList.remove('bg-forest', 'text-cream');
+      b.classList.add('bg-forest-light', 'text-charcoal');
+    });
+    clicked.classList.add('bg-forest', 'text-cream');
+    clicked.classList.remove('bg-forest-light', 'text-charcoal');
+    genderInput.value = value;
+  }
+ 
+  document.getElementById('gender-male-btn')?.addEventListener('click', (e) =>
+    selectGender(e.currentTarget as HTMLButtonElement, 'male'));
+  document.getElementById('gender-female-btn')?.addEventListener('click', (e) =>
+    selectGender(e.currentTarget as HTMLButtonElement, 'female'));
+ 
+  // --- Form submit: calculate BMR/TDEE, show result, auto-scroll, store state for roadmap ---
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+ 
+    const gender = genderInput.value;
+    const age = Number((document.getElementById('age') as HTMLInputElement).value);
+    const activity = Number((document.getElementById('activity') as HTMLSelectElement).value);
+    const surplus = Number((document.getElementById('surplus') as HTMLSelectElement).value);
+    const rawWeight = Number(weightInput.value);
+ 
+    const weightKg = currentUnitSystem === 'imperial' ? rawWeight / 2.20462 : rawWeight;
+ 
+    let heightCm: number;
+    if (currentUnitSystem === 'imperial') {
+      const feet = Number((document.getElementById('height-feet') as HTMLInputElement).value);
+      const inches = Number((document.getElementById('height-inches') as HTMLInputElement).value);
+      heightCm = (feet * 12 + inches) * 2.54;
+    } else {
+      heightCm = Number((document.getElementById('height') as HTMLInputElement).value);
+    }
+ 
+    let bmr;
+    if (gender === 'male') {
+      bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+    } else {
+      bmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+    }
+ 
+    const maintenance = Math.round(bmr * activity);
+    const targetCalories = maintenance + surplus;
+ 
+    resultValue.textContent = targetCalories.toString();
+    maintenanceValue.textContent = maintenance.toString();
+    resultBox.classList.remove('hidden');
+ 
+    // Auto-scroll so the result is centered in view (mobile + desktop)
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Animate the gauge ring (same pattern as the homepage calculator)
+    const gaugeCircle = document.getElementById('gauge-circle') as unknown as SVGCircleElement;
+    const circumference = 264;
+    const gaugePercentage = Math.min(targetCalories / 4000, 1);
+    const gaugeOffset = circumference - (gaugePercentage * circumference);
+    setTimeout(() => {
+      gaugeCircle.style.strokeDashoffset = gaugeOffset.toString();
+    }, 50);
+ 
+    // Store this calculation so the Roadmap script (below) can reuse it
+    const rateKgPerWeek = surplus / 1000; // 250/500/750 -> 0.25/0.5/0.75
+ 
+    (window as any).__gainCalcState = {
+      gender, age, activity, weightKg, heightCm,
+      maintenance, targetCalories, rateKgPerWeek, currentUnitSystem,
+    };
+ 
+    roadmapCta.classList.remove('hidden');
+    document.getElementById('roadmap-intake')?.classList.add('hidden');
+    document.getElementById('roadmap-panel')?.classList.add('hidden');
+  });
+</script>
+ 
+<!-- SCRIPT 3: ROADMAP LOGIC (intake, milestone + meal-plan generation, localStorage) -->
+<script>
+  import mealsData from '../data/meals.json';
+ 
+  type MealItem = { name: string; calories: number; protein: number; region: 'asian' | 'western' | 'both' };
+ 
+  const roadmapCta = document.getElementById('roadmap-cta') as HTMLDivElement;
+  const roadmapCtaBtn = document.getElementById('roadmap-cta-btn') as HTMLButtonElement;
+  const roadmapIntake = document.getElementById('roadmap-intake') as HTMLDivElement;
+  const roadmapGenerateBtn = document.getElementById('roadmap-generate-btn') as HTMLButtonElement;
+  const roadmapPanel = document.getElementById('roadmap-panel') as HTMLDivElement;
+  const roadmapBackBtn = document.getElementById('roadmap-back-btn') as HTMLButtonElement;
+  const dietPreference = document.getElementById('diet-preference') as HTMLInputElement;
+  const mealRegion = document.getElementById('meal-region') as HTMLInputElement;
+  const mealsPerDay = document.getElementById('meals-per-day') as HTMLInputElement;
+ 
+  const roadmapTargetWeight = document.getElementById('roadmap-target-weight') as HTMLInputElement;
+  const roadmapTimeframe = document.getElementById('roadmap-timeframe') as HTMLInputElement;
+  const roadmapTimeframeWarning = document.getElementById('roadmap-timeframe-warning') as HTMLParagraphElement;
+  const roadmapTargetWeightUnitLabel = document.getElementById('roadmap-target-weight-unit-label') as HTMLSpanElement;
+  const roadmapTargetWeightError = document.getElementById('roadmap-target-weight-error') as HTMLParagraphElement;
+  const roadmapTargetWeightDanger = document.getElementById('roadmap-target-weight-danger') as HTMLParagraphElement;
+ 
+  const dietBtns = document.querySelectorAll('.diet-btn') as NodeListOf<HTMLButtonElement>;
+  const regionBtns = document.querySelectorAll('.region-btn') as NodeListOf<HTMLButtonElement>;
+  const mealsBtns = document.querySelectorAll('.meals-btn') as NodeListOf<HTMLButtonElement>;
+ 
+  // --- Shared button-picker helper (diet + region + meals) ---
+  function selectButton(btns: NodeListOf<HTMLButtonElement>, clicked: HTMLButtonElement, hiddenInput: HTMLInputElement, value: string) {
+    btns.forEach((b) => {
+      b.classList.remove('bg-forest', 'text-cream');
+      b.classList.add('bg-forest-light', 'text-charcoal');
+    });
+    clicked.classList.add('bg-forest', 'text-cream');
+    clicked.classList.remove('bg-forest-light', 'text-charcoal');
+    hiddenInput.value = value;
+  }
+ 
+  document.getElementById('diet-veg-btn')?.addEventListener('click', (e) =>
+    selectButton(dietBtns, e.currentTarget as HTMLButtonElement, dietPreference, 'veg'));
+  document.getElementById('diet-nonveg-btn')?.addEventListener('click', (e) =>
+    selectButton(dietBtns, e.currentTarget as HTMLButtonElement, dietPreference, 'non-veg'));
+
+  document.getElementById('region-asian-btn')?.addEventListener('click', (e) =>
+    selectButton(regionBtns, e.currentTarget as HTMLButtonElement, mealRegion, 'asian'));
+  document.getElementById('region-western-btn')?.addEventListener('click', (e) =>
+    selectButton(regionBtns, e.currentTarget as HTMLButtonElement, mealRegion, 'western'));
+ 
+  document.getElementById('meals-3-btn')?.addEventListener('click', (e) =>
+    selectButton(mealsBtns, e.currentTarget as HTMLButtonElement, mealsPerDay, '3'));
+  document.getElementById('meals-4-btn')?.addEventListener('click', (e) =>
+    selectButton(mealsBtns, e.currentTarget as HTMLButtonElement, mealsPerDay, '4'));
+  document.getElementById('meals-5-btn')?.addEventListener('click', (e) =>
+    selectButton(mealsBtns, e.currentTarget as HTMLButtonElement, mealsPerDay, '5'));
+ 
+  const rmCurrent = document.getElementById('rm-current') as HTMLParagraphElement;
+  const rmTarget = document.getElementById('rm-target') as HTMLParagraphElement;
+  const rmTotal = document.getElementById('rm-total') as HTMLParagraphElement;
+  const rmTimeframe = document.getElementById('rm-timeframe') as HTMLParagraphElement;
+  const rmWarning = document.getElementById('rm-warning') as HTMLParagraphElement;
+  const rmCalories = document.getElementById('rm-calories') as HTMLParagraphElement;
+  const rmProtein = document.getElementById('rm-protein') as HTMLParagraphElement;
+  const rmMilestones = document.getElementById('rm-milestones') as HTMLUListElement;
+  const rmMealplan = document.getElementById('rm-mealplan') as HTMLDivElement;
+ 
+  const STORAGE_KEY = 'weightGoalPlanner';
+ 
+  function loadPlanner(): any {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }
+ 
+  function savePlanner(data: any) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+ 
+  // --- Meal plan generation: greedy fit to per-meal calorie/protein target ---
+  function pickMeal(pool: MealItem[], calorieTarget: number, proteinTarget: number): MealItem[] {
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const picked: MealItem[] = [];
+    let cals = 0, protein = 0;
+ 
+    for (const item of shuffled) {
+      if (cals + item.calories <= calorieTarget * 1.15) {
+        picked.push(item);
+        cals += item.calories;
+        protein += item.protein;
+        if (cals >= calorieTarget * 0.85 && protein >= proteinTarget * 0.7) break;
+      }
+    }
+    return picked.length ? picked : [shuffled[0]];
+  }
+ 
+  function buildMealPlan(dailyCalories: number, dailyProtein: number, meals: number, diet: 'veg' | 'non-veg', region: 'asian' | 'western') {
+    const fullPool: MealItem[] = (mealsData as any)[diet];
+    const pool = fullPool.filter((item) => item.region === region || item.region === 'both');
+    const perMealCalories = dailyCalories / meals;
+    const perMealProtein = dailyProtein / meals;
+    const plan = [];
+    for (let i = 0; i < meals; i++) {
+      plan.push(pickMeal(pool, perMealCalories, perMealProtein));
+    }
+    return plan;
+  }
+ 
+  // --- Milestones: dynamic quartile split between current and target weight (trends upward for gain) ---
+  function buildMilestones(currentWeight: number, targetWeight: number): number[] {
+    const steps = 4;
+    const diff = targetWeight - currentWeight;
+    const milestones = [];
+    for (let i = 1; i <= steps; i++) {
+      milestones.push(Math.round((currentWeight + (diff * i) / steps) * 10) / 10);
+    }
+    return milestones;
+  }
+ 
+  // --- Open intake step ---
+  roadmapCtaBtn.addEventListener('click', () => {
+    const state = (window as any).__gainCalcState;
+    roadmapTargetWeightUnitLabel.textContent = state?.currentUnitSystem === 'imperial' ? 'lb' : 'kg';
+    roadmapTargetWeightError.classList.add('hidden');
+    roadmapTargetWeightDanger.classList.add('hidden');
+    roadmapTimeframeWarning.classList.add('hidden');
+    roadmapTimeframe.value = '';
+    roadmapCta.classList.add('hidden');
+    roadmapIntake.classList.remove('hidden');
+    roadmapIntake.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+ 
+  // --- Generate roadmap ---
+  // Mobile fix: blur any focused input first so an on-screen keyboard closing
+  // doesn't swallow the tap before the click handler runs.
+  function generateRoadmap() {
+    const state = (window as any).__gainCalcState;
+    if (!state) return;
+ 
+    const rawTargetWeight = Number(roadmapTargetWeight.value);
+    const targetWeightKg = state.currentUnitSystem === 'imperial' ? rawTargetWeight / 2.20462 : rawTargetWeight;
+ 
+    if (!rawTargetWeight || targetWeightKg <= state.weightKg) {
+      roadmapTargetWeightError.classList.remove('hidden');
+      roadmapTargetWeightDanger.classList.add('hidden');
+      return;
+    }
+    roadmapTargetWeightError.classList.add('hidden');
+
+    // Safety check: block medically implausible targets (e.g. a BMI far past "obese")
+    // instead of generating an "aggressive plan" — matches the spec's own Safety requirement.
+    const heightM = state.heightCm / 100;
+    const targetBmi = targetWeightKg / (heightM * heightM);
+
+    if (targetBmi > 40) {
+      roadmapTargetWeightDanger.classList.remove('hidden');
+      return;
+    }
+    roadmapTargetWeightDanger.classList.add('hidden');
+
+    const diet = dietPreference.value as 'veg' | 'non-veg';
+    const region = mealRegion.value as 'asian' | 'western';
+    const meals = Number(mealsPerDay.value);
+ 
+    const currentWeight = Math.round(state.weightKg * 10) / 10;
+    const targetWeight = Math.round(targetWeightKg * 10) / 10;
+    const totalToGain = Math.round((targetWeight - currentWeight) * 10) / 10;
+    const dailyProtein = Math.round(state.weightKg * 1.8); // ~1.8g/kg to support lean gain
+
+    // --- Timeframe: user-entered weeks (optional) overrides the surplus-based pace ---
+    const CALORIES_PER_KG = 7700;
+    const MAX_SAFE_DAILY_ADJUSTMENT = 1000;
+    const enteredWeeks = Number(roadmapTimeframe.value);
+
+    let weeks: number;
+    let dailyCalories: number;
+    let warningMessage = '';
+
+    if (enteredWeeks > 0) {
+      weeks = enteredWeeks;
+      const totalCaloriesNeeded = totalToGain * CALORIES_PER_KG;
+      const requestedDailySurplus = Math.round(totalCaloriesNeeded / (weeks * 7));
+      const dailySurplus = Math.min(requestedDailySurplus, MAX_SAFE_DAILY_ADJUSTMENT);
+      dailyCalories = state.maintenance + dailySurplus;
+
+      if (requestedDailySurplus > MAX_SAFE_DAILY_ADJUSTMENT) {
+        const realisticWeeks = Math.ceil(totalCaloriesNeeded / (MAX_SAFE_DAILY_ADJUSTMENT * 7));
+        warningMessage = `Your timeframe was too short for a safe pace, so we've stretched it to a realistic, safe schedule.`;
+        weeks = realisticWeeks; // show the real, safe timeframe — not the unrealistic input
+      }
+    } else {
+      weeks = Math.max(1, Math.round(totalToGain / state.rateKgPerWeek));
+      dailyCalories = state.targetCalories;
+    }
+
+    if (warningMessage) {
+      roadmapTimeframeWarning.textContent = warningMessage.trim();
+      roadmapTimeframeWarning.classList.remove('hidden');
+    } else {
+      roadmapTimeframeWarning.classList.add('hidden');
+    }
+ 
+    const milestones = buildMilestones(currentWeight, targetWeight);
+    const mealPlan = buildMealPlan(dailyCalories, dailyProtein, meals, diet, region);
+ 
+    const roadmapData = {
+      goal: 'gain',
+      profile: { gender: state.gender, age: state.age, activity: state.activity, currentWeight },
+      target: { targetWeight, totalToGain, weeks, dailyCalories, dailyProtein, diet, meals },
+      milestones,
+      mealPlan,
+      warningMessage,
+      weightHistory: [{ date: new Date().toISOString().split('T')[0], weight: currentWeight }],
+    };
+ 
+    savePlanner(roadmapData);
+    renderRoadmap(roadmapData);
+ 
+    roadmapIntake.classList.add('hidden');
+    roadmapPanel.classList.remove('hidden');
+    roadmapPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+ 
+  roadmapGenerateBtn.addEventListener('click', () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    generateRoadmap();
+  });
+ 
+  // --- Render roadmap result ---
+  function renderRoadmap(data: any) {
+    rmCurrent.textContent = `${data.profile.currentWeight} kg`;
+    rmTarget.textContent = `${data.target.targetWeight} kg`;
+    rmTotal.textContent = `${data.target.totalToGain} kg`;
+    rmTimeframe.textContent = `~${data.target.weeks} weeks`;
+    if (data.warningMessage) {
+      rmWarning.textContent = data.warningMessage;
+      rmWarning.classList.remove('hidden');
+    } else {
+      rmWarning.classList.add('hidden');
+    }
+    rmCalories.textContent = `${data.target.dailyCalories} cal`;
+    rmProtein.textContent = `${data.target.dailyProtein} g`;
+ 
+    rmMilestones.innerHTML = '';
+    let prev = data.profile.currentWeight;
+    data.milestones.forEach((m: number) => {
+      const li = document.createElement('li');
+      li.textContent = `${prev} kg → ${m} kg`;
+      rmMilestones.appendChild(li);
+      prev = m;
+    });
+ 
+    rmMealplan.innerHTML = '';
+    data.mealPlan?.forEach((meal: any[], i: number) => {
+      const div = document.createElement('div');
+      const totalCal = meal.reduce((s, m) => s + m.calories, 0);
+      const totalProtein = meal.reduce((s, m) => s + m.protein, 0);
+      div.innerHTML = `<p class="font-semibold text-charcoal">Meal ${i + 1} (~${totalCal} cal, ${totalProtein}g protein)</p>
+        <ul class="list-disc list-inside text-charcoal/70">${meal.map((f) => `<li>${f.name}</li>`).join('')}</ul>`;
+      rmMealplan.appendChild(div);
+    });
+  }
+ 
+  roadmapBackBtn.addEventListener('click', () => {
+    roadmapPanel.classList.add('hidden');
+    roadmapCta.classList.remove('hidden');
+  });
+</script>
+ 
+<!-- SCRIPT 4: FAQ ACCORDION UI -->
+<script>
+  const faqButtons = document.querySelectorAll('.faq-question');
+ 
+  faqButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const answer = button.nextElementSibling as HTMLDivElement;
+      const icon = button.querySelector('.faq-icon') as HTMLSpanElement;
+ 
+      const isHidden = answer.classList.contains('hidden');
+ 
+      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach((el) => el.classList.remove('rotate-180'));
+ 
+      if (isHidden) {
+        answer.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      }
+    });
+  });
+</script>

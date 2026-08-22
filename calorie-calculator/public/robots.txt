@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://calorieace.com/sitemap-index.xml

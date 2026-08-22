@@ -1,0 +1,420 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Track Your Progress | CalorieAce"
+  description="Log your weight and track progress toward your personalized weight loss or weight gain roadmap."
+  noindex={true}
+>
+  <main class="max-w-2xl mx-auto px-4 py-10">
+
+    <!-- ============ SECTION 1: PAGE HEADER ============ -->
+    <a href="#" id="back-to-calculator" class="touch-manipulation font-body text-sm text-forest hover:underline">&larr; Back to Calculator</a>
+
+    <h1 class="mt-3 font-heading text-4xl md:text-5xl font-bold text-charcoal leading-tight">
+      Track Your <span class="text-forest">Progress</span>
+    </h1>
+
+    <p class="mt-3 font-body text-lg text-gray-soft max-w-lg">
+      See how close you are to your goal and log your weight anytime. Saved locally on this device/browser only.
+    </p>
+
+    <!-- ============ SECTION 2: EMPTY STATE (no roadmap saved yet) ============ -->
+    <section id="empty-state" class="mt-8 hidden p-8 bg-white rounded-2xl shadow-[0_2px_24px_rgba(26,26,24,0.06)] border border-forest-light text-center">
+      <p class="font-body text-charcoal/80">
+        You haven't created a roadmap yet. Create one from either calculator to start tracking your progress.
+      </p>
+      <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/weight-loss-calculator" class="touch-manipulation bg-forest text-cream font-body font-semibold px-6 py-3 rounded-lg hover:bg-forest-dark transition-colors">
+          Weight Loss Calculator
+        </a>
+        <a href="/weight-gain-calculator" class="touch-manipulation bg-forest-light text-forest-dark font-body font-semibold px-6 py-3 rounded-lg hover:bg-forest hover:text-cream transition-colors">
+          Weight Gain Calculator
+        </a>
+      </div>
+
+      <div class="mt-6 pt-6 border-t border-forest-light text-left">
+        <button type="button" id="show-restore-btn" class="touch-manipulation font-body text-sm text-forest hover:underline">
+          Have a backup code? Restore it
+        </button>
+        <div id="restore-box-empty" class="mt-3 hidden">
+          <textarea id="restore-input-empty" rows="3" placeholder="Paste your backup code here" class="w-full rounded-lg border-gray-200 bg-cream text-sm p-2"></textarea>
+          <button type="button" id="restore-btn-empty" class="touch-manipulation mt-2 w-full bg-forest text-cream font-body text-sm font-semibold py-2 rounded-lg hover:bg-forest-dark transition-colors">
+            Restore
+          </button>
+          <p id="restore-error-empty" class="mt-1 font-body text-xs text-amber-600 hidden">
+            That code doesn't look valid. Double check you copied the whole thing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3: PROGRESS PANEL (roadmap exists) ============ -->
+    <section id="progress-panel" class="mt-8 hidden p-8 bg-white rounded-2xl shadow-[0_2px_24px_rgba(26,26,24,0.06)] border border-forest-light">
+      <h2 id="pp-goal-title" class="font-heading text-xl font-semibold text-forest"></h2>
+
+      <div class="mt-4 grid grid-cols-3 gap-3 font-body text-sm">
+        <div class="bg-forest-light rounded-lg p-3 text-center">
+          <p class="text-xs text-gray-soft uppercase">Start</p>
+          <p id="pp-start" class="font-semibold text-charcoal"></p>
+        </div>
+        <div class="bg-forest-light rounded-lg p-3 text-center">
+          <p class="text-xs text-gray-soft uppercase">Current</p>
+          <p id="pp-current" class="font-semibold text-charcoal"></p>
+        </div>
+        <div class="bg-forest-light rounded-lg p-3 text-center">
+          <p class="text-xs text-gray-soft uppercase">Target</p>
+          <p id="pp-target" class="font-semibold text-charcoal"></p>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="mt-6">
+        <div class="w-full bg-forest-light rounded-full h-3">
+          <div id="pp-progress-bar" class="bg-forest h-3 rounded-full transition-all" style="width: 0%"></div>
+        </div>
+        <p class="mt-2 font-body text-sm text-charcoal/80">
+          <span id="pp-progress-pct">0</span>% to goal &middot; <span id="pp-remaining"></span> remaining
+        </p>
+      </div>
+
+      <!-- Log a new weight -->
+      <h3 class="mt-8 font-heading font-semibold text-charcoal">Log Your Weight</h3>
+      <form id="weight-log-form" class="mt-3 space-y-3">
+        <div>
+          <label for="log-date" class="block text-xs font-medium text-charcoal/60 mb-1">Date</label>
+          <input type="date" id="log-date" inputmode="none" class="w-full rounded-lg border-gray-200 bg-cream text-sm py-2" required />
+        </div>
+        <div class="flex gap-2">
+          <input type="number" id="log-weight" step="0.1" inputmode="decimal" placeholder="Weight (kg)" class="flex-1 min-w-0 rounded-lg border-gray-200 bg-cream text-sm py-2" required />
+          <button type="submit" class="touch-manipulation shrink-0 bg-forest text-cream font-body text-sm font-semibold px-4 rounded-lg hover:bg-forest-dark transition-colors">Add</button>
+        </div>
+      </form>
+      <p id="log-error" class="mt-1 font-body text-xs text-amber-600 hidden">Please enter a date and weight.</p>
+
+      <!-- History -->
+      <h3 class="mt-8 font-heading font-semibold text-charcoal">History</h3>
+      <ul id="pp-history" class="mt-2 font-body text-sm text-charcoal/70 space-y-1"></ul>
+
+      <!-- Roadmap toggle -->
+      <button type="button" id="view-roadmap-btn" class="touch-manipulation mt-8 w-full bg-forest-light text-forest-dark font-body font-semibold py-3 rounded-lg hover:bg-forest hover:text-cream transition-colors">
+        View My Roadmap
+      </button>
+
+      <!-- Roadmap details (hidden until toggled) -->
+      <div id="roadmap-details" class="mt-4 hidden p-5 bg-cream rounded-xl border border-forest-light">
+        <div class="grid grid-cols-2 gap-3 font-body text-sm">
+          <div class="bg-white rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Total change</p>
+            <p id="rd-total" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Est. timeframe</p>
+            <p id="rd-timeframe" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Daily calories</p>
+            <p id="rd-calories" class="font-semibold text-charcoal"></p>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <p class="text-xs text-gray-soft uppercase">Daily protein</p>
+            <p id="rd-protein" class="font-semibold text-charcoal"></p>
+          </div>
+        </div>
+
+        <h4 class="mt-5 font-heading font-semibold text-charcoal">Milestones</h4>
+        <ul id="rd-milestones" class="mt-2 font-body text-sm text-charcoal/80 space-y-1"></ul>
+
+        <h4 class="mt-5 font-heading font-semibold text-charcoal">Sample Meal Plan</h4>
+        <div id="rd-mealplan" class="mt-2 font-body text-sm text-charcoal/80 space-y-3"></div>
+      </div>
+
+      <!-- Backup & Restore -->
+      <div class="mt-8 pt-6 border-t border-forest-light">
+        <h3 class="font-heading font-semibold text-charcoal">Backup & Restore</h3>
+        <p class="mt-1 font-body text-xs text-charcoal/60">
+          Your progress is saved only on this device/browser. Use a backup code to move it to another device, or restore it if it ever gets cleared (e.g. opening the link from WhatsApp).
+        </p>
+
+        <button type="button" id="export-btn" class="touch-manipulation mt-3 w-full bg-forest-light text-forest-dark font-body text-sm font-semibold py-2.5 rounded-lg hover:bg-forest hover:text-cream transition-colors">
+          Get My Backup Code
+        </button>
+        <div id="export-box" class="mt-2 hidden">
+          <textarea id="export-output" rows="3" readonly class="w-full rounded-lg border-gray-200 bg-cream text-xs p-2"></textarea>
+          <button type="button" id="copy-btn" class="touch-manipulation mt-2 w-full bg-forest text-cream font-body text-sm font-semibold py-2 rounded-lg hover:bg-forest-dark transition-colors">
+            Copy Code
+          </button>
+          <p id="copy-confirm" class="mt-1 font-body text-xs text-forest hidden">Copied!</p>
+        </div>
+
+        <button type="button" id="show-restore-btn-panel" class="touch-manipulation mt-4 font-body text-sm text-forest hover:underline">
+          Restore from a backup code
+        </button>
+        <div id="restore-box-panel" class="mt-2 hidden">
+          <textarea id="restore-input-panel" rows="3" placeholder="Paste your backup code here" class="w-full rounded-lg border-gray-200 bg-cream text-sm p-2"></textarea>
+          <button type="button" id="restore-btn-panel" class="touch-manipulation mt-2 w-full bg-forest text-cream font-body text-sm font-semibold py-2 rounded-lg hover:bg-forest-dark transition-colors">
+            Restore (overwrites current progress)
+          </button>
+          <p id="restore-error-panel" class="mt-1 font-body text-xs text-amber-600 hidden">
+            That code doesn't look valid. Double check you copied the whole thing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Clear progress -->
+      <button type="button" id="clear-progress-btn" class="touch-manipulation mt-8 font-body text-xs text-amber-600 hover:underline">
+        Clear Progress
+      </button>
+    </section>
+  </main>
+</Layout>
+
+<!-- SCRIPT: PROGRESS PAGE LOGIC (reads the shared weightGoalPlanner localStorage key) -->
+<script>
+  const STORAGE_KEY = 'weightGoalPlanner';
+
+  const emptyState = document.getElementById('empty-state') as HTMLDivElement;
+  const progressPanel = document.getElementById('progress-panel') as HTMLDivElement;
+  const backLink = document.getElementById('back-to-calculator') as HTMLAnchorElement;
+
+  const ppGoalTitle = document.getElementById('pp-goal-title') as HTMLHeadingElement;
+  const ppStart = document.getElementById('pp-start') as HTMLParagraphElement;
+  const ppCurrent = document.getElementById('pp-current') as HTMLParagraphElement;
+  const ppTarget = document.getElementById('pp-target') as HTMLParagraphElement;
+  const ppProgressBar = document.getElementById('pp-progress-bar') as HTMLDivElement;
+  const ppProgressPct = document.getElementById('pp-progress-pct') as HTMLSpanElement;
+  const ppRemaining = document.getElementById('pp-remaining') as HTMLSpanElement;
+  const ppHistory = document.getElementById('pp-history') as HTMLUListElement;
+
+  const weightLogForm = document.getElementById('weight-log-form') as HTMLFormElement;
+  const logDate = document.getElementById('log-date') as HTMLInputElement;
+  const logWeight = document.getElementById('log-weight') as HTMLInputElement;
+  const logError = document.getElementById('log-error') as HTMLParagraphElement;
+
+  const clearProgressBtn = document.getElementById('clear-progress-btn') as HTMLButtonElement;
+
+  const viewRoadmapBtn = document.getElementById('view-roadmap-btn') as HTMLButtonElement;
+  const roadmapDetails = document.getElementById('roadmap-details') as HTMLDivElement;
+  const rdTotal = document.getElementById('rd-total') as HTMLParagraphElement;
+  const rdTimeframe = document.getElementById('rd-timeframe') as HTMLParagraphElement;
+  const rdCalories = document.getElementById('rd-calories') as HTMLParagraphElement;
+  const rdProtein = document.getElementById('rd-protein') as HTMLParagraphElement;
+  const rdMilestones = document.getElementById('rd-milestones') as HTMLUListElement;
+  const rdMealplan = document.getElementById('rd-mealplan') as HTMLDivElement;
+
+  viewRoadmapBtn.addEventListener('click', () => {
+    const isHidden = roadmapDetails.classList.contains('hidden');
+    roadmapDetails.classList.toggle('hidden');
+    viewRoadmapBtn.textContent = isHidden ? 'Hide My Roadmap' : 'View My Roadmap';
+    if (isHidden) {
+      roadmapDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  });
+
+  function loadPlanner(): any {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  function savePlanner(data: any) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // --- Backup & Restore: encode/decode progress as a portable text code ---
+  function encodeBackup(data: any): string {
+    return btoa(encodeURIComponent(JSON.stringify(data)));
+  }
+
+  function decodeBackup(code: string): any {
+    const parsed = JSON.parse(decodeURIComponent(atob(code.trim())));
+    if (!parsed || !parsed.target || !parsed.profile) {
+      throw new Error('Invalid backup code');
+    }
+    return parsed;
+  }
+
+  // Empty state: restore
+  const showRestoreBtn = document.getElementById('show-restore-btn') as HTMLButtonElement;
+  const restoreBoxEmpty = document.getElementById('restore-box-empty') as HTMLDivElement;
+  const restoreInputEmpty = document.getElementById('restore-input-empty') as HTMLTextAreaElement;
+  const restoreBtnEmpty = document.getElementById('restore-btn-empty') as HTMLButtonElement;
+  const restoreErrorEmpty = document.getElementById('restore-error-empty') as HTMLParagraphElement;
+
+  showRestoreBtn.addEventListener('click', () => {
+    restoreBoxEmpty.classList.toggle('hidden');
+  });
+
+  restoreBtnEmpty.addEventListener('click', () => {
+    try {
+      const data = decodeBackup(restoreInputEmpty.value);
+      savePlanner(data);
+      restoreErrorEmpty.classList.add('hidden');
+      restoreInputEmpty.value = '';
+      restoreBoxEmpty.classList.add('hidden');
+      render();
+    } catch {
+      restoreErrorEmpty.classList.remove('hidden');
+    }
+  });
+
+  // Progress panel: export
+  const exportBtn = document.getElementById('export-btn') as HTMLButtonElement;
+  const exportBox = document.getElementById('export-box') as HTMLDivElement;
+  const exportOutput = document.getElementById('export-output') as HTMLTextAreaElement;
+  const copyBtn = document.getElementById('copy-btn') as HTMLButtonElement;
+  const copyConfirm = document.getElementById('copy-confirm') as HTMLParagraphElement;
+
+  exportBtn.addEventListener('click', () => {
+    const data = loadPlanner();
+    if (!data) return;
+    exportOutput.value = encodeBackup(data);
+    exportBox.classList.remove('hidden');
+    copyConfirm.classList.add('hidden');
+    exportOutput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(exportOutput.value);
+      copyConfirm.classList.remove('hidden');
+    } catch {
+      exportOutput.select();
+      document.execCommand('copy');
+      copyConfirm.classList.remove('hidden');
+    }
+  });
+
+  // Progress panel: restore
+  const showRestoreBtnPanel = document.getElementById('show-restore-btn-panel') as HTMLButtonElement;
+  const restoreBoxPanel = document.getElementById('restore-box-panel') as HTMLDivElement;
+  const restoreInputPanel = document.getElementById('restore-input-panel') as HTMLTextAreaElement;
+  const restoreBtnPanel = document.getElementById('restore-btn-panel') as HTMLButtonElement;
+  const restoreErrorPanel = document.getElementById('restore-error-panel') as HTMLParagraphElement;
+
+  showRestoreBtnPanel.addEventListener('click', () => {
+    restoreBoxPanel.classList.toggle('hidden');
+  });
+
+  restoreBtnPanel.addEventListener('click', () => {
+    try {
+      const data = decodeBackup(restoreInputPanel.value);
+      savePlanner(data);
+      restoreErrorPanel.classList.add('hidden');
+      restoreInputPanel.value = '';
+      restoreBoxPanel.classList.add('hidden');
+      render();
+    } catch {
+      restoreErrorPanel.classList.remove('hidden');
+    }
+  });
+
+  function render() {
+    const data = loadPlanner();
+
+    if (!data) {
+      emptyState.classList.remove('hidden');
+      progressPanel.classList.add('hidden');
+      backLink.href = '/';
+      return;
+    }
+
+    emptyState.classList.add('hidden');
+    progressPanel.classList.remove('hidden');
+    backLink.href = data.goal === 'gain' ? '/weight-gain-calculator' : '/weight-loss-calculator';
+
+    const isGain = data.goal === 'gain';
+    ppGoalTitle.textContent = isGain ? 'Your Weight Gain Progress' : 'Your Weight Loss Progress';
+
+    const startWeight = data.profile.currentWeight;
+    const targetWeight = data.target.targetWeight;
+    const history = data.weightHistory || [];
+    const latest = history.length ? history[history.length - 1].weight : startWeight;
+
+    ppStart.textContent = `${startWeight} kg`;
+    ppCurrent.textContent = `${latest} kg`;
+    ppTarget.textContent = `${targetWeight} kg`;
+
+    const totalChange = isGain ? targetWeight - startWeight : startWeight - targetWeight;
+    const changeSoFar = isGain ? latest - startWeight : startWeight - latest;
+    const pct = totalChange > 0 ? Math.min(100, Math.max(0, Math.round((changeSoFar / totalChange) * 100))) : 0;
+    const remaining = isGain
+      ? Math.max(0, Math.round((targetWeight - latest) * 10) / 10)
+      : Math.max(0, Math.round((latest - targetWeight) * 10) / 10);
+
+    ppProgressBar.style.width = `${pct}%`;
+    ppProgressPct.textContent = pct.toString();
+    ppRemaining.textContent = `${remaining} kg`;
+
+    ppHistory.innerHTML = '';
+    if (!history.length) {
+      const li = document.createElement('li');
+      li.textContent = 'No entries yet — log your first weigh-in below.';
+      li.className = 'text-gray-soft';
+      ppHistory.appendChild(li);
+    } else {
+      [...history].reverse().forEach((entry: any) => {
+        const li = document.createElement('li');
+        li.textContent = `${entry.date} — ${entry.weight} kg`;
+        ppHistory.appendChild(li);
+      });
+    }
+
+    // Roadmap details (collapsed by default — populated here, revealed via toggle button)
+    const totalChangeKg = isGain ? data.target.totalToGain : data.target.totalToLose;
+    rdTotal.textContent = `${totalChangeKg} kg`;
+    rdTimeframe.textContent = `~${data.target.weeks} weeks`;
+    rdCalories.textContent = `${data.target.dailyCalories} cal`;
+    rdProtein.textContent = `${data.target.dailyProtein} g`;
+
+    rdMilestones.innerHTML = '';
+    let prevMilestone = startWeight;
+    data.milestones.forEach((m: number) => {
+      const li = document.createElement('li');
+      li.textContent = `${prevMilestone} kg → ${m} kg`;
+      rdMilestones.appendChild(li);
+      prevMilestone = m;
+    });
+
+    rdMealplan.innerHTML = '';
+    data.mealPlan?.forEach((meal: any[], i: number) => {
+      const div = document.createElement('div');
+      const totalCal = meal.reduce((s: number, m: any) => s + m.calories, 0);
+      const totalProtein = meal.reduce((s: number, m: any) => s + m.protein, 0);
+      div.innerHTML = `<p class="font-semibold text-charcoal">Meal ${i + 1} (~${totalCal} cal, ${totalProtein}g protein)</p>
+        <ul class="list-disc list-inside text-charcoal/70">${meal.map((f: any) => `<li>${f.name}</li>`).join('')}</ul>`;
+      rdMealplan.appendChild(div);
+    });
+
+    // Reset toggle state to collapsed on every render (e.g. after logging a new weight)
+    roadmapDetails.classList.add('hidden');
+    viewRoadmapBtn.textContent = 'View My Roadmap';
+  }
+
+  weightLogForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = loadPlanner();
+    if (!data) return;
+
+    if (!logDate.value || !logWeight.value) {
+      logError.classList.remove('hidden');
+      return;
+    }
+    logError.classList.add('hidden');
+
+    data.weightHistory.push({ date: logDate.value, weight: Number(logWeight.value) });
+    savePlanner(data);
+    render();
+    weightLogForm.reset();
+  });
+
+  clearProgressBtn.addEventListener('click', () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  });
+
+  render();
+</script>

@@ -1,0 +1,15 @@
+@theme {
+  --color-cream: #F7F9F4;
+  --color-forest: #2F6B4F;
+  --color-forest-dark: #24543E;
+  --color-forest-light: #E8F0E9;
+  --color-charcoal: #1A1A18;
+  --color-gray-soft: #6B7280;
+
+  --font-heading: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+@import "tailwindcss";
+html {
+  scroll-behavior: smooth;
+}

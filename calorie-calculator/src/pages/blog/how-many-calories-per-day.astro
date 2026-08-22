@@ -1,0 +1,235 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="How Many Calories Should I Eat a Day? | CalorieAce"
+  description="Learn how many calories you should eat per day based on your age, sex, and activity level, common myths, and get an exact personalized number with our free calculator."
+  image="/blog-calories-per-day.webp"
+>
+  <main class="max-w-2xl mx-auto px-4 py-10">
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-charcoal leading-tight">
+      How Many <span class="text-forest">Calories</span> Should I Eat a Day?
+    </h1>
+
+    <p class="mt-2 font-body text-sm text-gray-soft">Published August 13, 2026</p>
+
+    <img
+      src="/blog-calories-per-day.webp"
+      alt="Illustration representing daily calorie needs and nutrition balance"
+      class="w-full rounded-2xl mt-6"
+      width="1200"
+      height="630"
+    />
+
+    <div class="mt-6 font-body text-charcoal/90 space-y-6 leading-relaxed">
+      <p>
+        If you've ever looked at a nutrition label and wondered whether you're eating too much or too little, you're not alone. There's no single "right" number of calories for everyone — your needs depend on your age, sex, body size, and how active you are. Below is a full breakdown of typical ranges, the myths that confuse people most, and how to land on a number that's actually yours.
+      </p>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">The General Range</h2>
+        <p>
+          According to U.S. Dietary Guidelines, adult females typically need between 1,600 and 2,400 calories per day, while adult males need between 2,200 and 3,000 calories per day. Where you fall in that range depends heavily on your activity level and body size.
+        </p>
+        <p class="mt-3">
+          These ranges are intentionally wide because they're built to cover the entire adult population — a sedentary, smaller-framed 65-year-old and an active, larger-framed 25-year-old can both be "adult females" on paper while needing very different amounts of food. That's exactly why a personalized calculation matters more than a population-wide range.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Typical Calorie Ranges at a Glance</h2>
+        <p class="mb-3">
+          Here's a rough starting point by age group and activity level. Treat these as a general reference, not a personal target — the calculator further down accounts for your exact stats.
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-forest-light">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-forest-light">
+                <th class="px-4 py-3 font-heading font-semibold text-charcoal">Group</th>
+                <th class="px-4 py-3 font-heading font-semibold text-charcoal">Sedentary</th>
+                <th class="px-4 py-3 font-heading font-semibold text-charcoal">Moderately Active</th>
+                <th class="px-4 py-3 font-heading font-semibold text-charcoal">Very Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-forest-light">
+                <td class="px-4 py-3">Women, 19–30</td>
+                <td class="px-4 py-3">1,800–2,000</td>
+                <td class="px-4 py-3">2,000–2,200</td>
+                <td class="px-4 py-3">2,200–2,400</td>
+              </tr>
+              <tr class="border-t border-forest-light">
+                <td class="px-4 py-3">Women, 31–50</td>
+                <td class="px-4 py-3">1,800</td>
+                <td class="px-4 py-3">2,000</td>
+                <td class="px-4 py-3">2,200</td>
+              </tr>
+              <tr class="border-t border-forest-light">
+                <td class="px-4 py-3">Men, 19–30</td>
+                <td class="px-4 py-3">2,400–2,600</td>
+                <td class="px-4 py-3">2,600–2,800</td>
+                <td class="px-4 py-3">3,000</td>
+              </tr>
+              <tr class="border-t border-forest-light">
+                <td class="px-4 py-3">Men, 31–50</td>
+                <td class="px-4 py-3">2,200–2,400</td>
+                <td class="px-4 py-3">2,400–2,600</td>
+                <td class="px-4 py-3">2,800–3,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3">
+          These figures reflect maintenance calories from U.S. Dietary Guidelines estimates. Individual variation within any single row can still be several hundred calories, which is why a personalized BMR-based calculation is more reliable than picking a number off a table.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Why Calorie Needs Vary So Much</h2>
+        <p>
+          Your basal metabolic rate (BMR) — the energy your body burns just existing — depends on your lean mass, height, age, and genetics, and two people of the same age and weight can have BMRs that differ by 300 or more calories. On top of that, everyday movement like fidgeting, standing, and walking around adds up too, and varies a lot from person to person. Our full <a href="/blog/what-is-bmr" class="text-forest underline hover:text-forest-dark">BMR guide</a> breaks down exactly what goes into that number and how it's calculated.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">The Three Pieces of Your Daily Number</h2>
+        <p class="mb-3">
+          Your total daily calorie need (TDEE) is made up of three components:
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li><strong>BMR</strong> — calories burned at rest, typically 60–75% of your total</li>
+          <li><strong>Physical activity</strong> — both structured exercise and everyday movement (walking, chores, fidgeting)</li>
+          <li><strong>Thermic effect of food</strong> — the energy spent digesting what you eat, roughly 10% of intake</li>
+        </ul>
+        <p class="mt-3">
+          Calculators typically account for this by multiplying your BMR by an "activity multiplier" — a number like 1.2 for a sedentary lifestyle up to around 1.9 for very intense daily training — which bundles activity and the thermic effect together into one adjustment.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Calorie Needs by Life Stage</h2>
+        <p class="mb-3">
+          Calorie needs generally decline with age, since muscle mass tends to decrease and metabolism slows down over time. Roughly speaking:
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li><strong>Teenagers (14–18):</strong> boys need around 2,200–3,200 calories/day; girls need around 1,800–2,400</li>
+          <li><strong>Young adults (19–30):</strong> men need around 2,400–3,000; women need around 1,800–2,400</li>
+          <li><strong>Middle-aged and older adults:</strong> needs gradually decrease, often landing at the lower end of these ranges</li>
+        </ul>
+        <p class="mt-3">
+          The decline isn't inevitable, though — it's driven largely by decreasing muscle mass and activity levels, both of which respond well to regular resistance training and staying physically active. Someone who maintains muscle mass into their 50s and 60s will typically have meaningfully higher calorie needs than a sedentary peer of the same age.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Does Weight Goal Change the Number?</h2>
+        <p>
+          The ranges above generally describe maintenance calories — what keeps your weight stable. If your goal is to lose weight, you'd typically eat somewhat below that number (a deficit); if your goal is to gain weight, somewhat above it (a surplus). The size of that adjustment matters for both speed and sustainability — our guides on <a href="/blog/calorie-deficit-explained" class="text-forest underline hover:text-forest-dark">calorie deficits</a> and <a href="/blog/calorie-surplus-explained" class="text-forest underline hover:text-forest-dark">calorie surpluses</a> cover how to size that adjustment safely.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">A Common Reference Point: 2,000 Calories</h2>
+        <p>
+          You'll often see "2,000 calories" used as a standard reference on nutrition labels — it's based on the estimated needs of an average adult and used for meal-planning and labeling purposes, not as a personal target. Your own number could be meaningfully higher or lower, sometimes by several hundred calories, depending on your specific age, sex, size, and activity level.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Common Myths About Daily Calorie Needs</h2>
+        <div class="space-y-4 mt-3">
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Everyone should aim for 2,000 calories a day</h3>
+            <p class="mt-1">2,000 calories is a generic labeling reference, not a personal recommendation. Depending on your size, sex, age, and activity level, your actual number could easily be 500 or more calories higher or lower.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Eating fewer calories always means losing weight faster</h3>
+            <p class="mt-1">Going too low can slow progress by triggering muscle loss, fatigue, and eventually binge-restrict cycles that undo the deficit. Extremely low intakes are also harder to sustain, which matters more than short-term speed.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Your metabolism is "broken" if you're not losing weight</h3>
+            <p class="mt-1">True metabolic damage is rare. Stalled progress is far more often explained by intake creeping up, activity level dropping, or TDEE decreasing naturally as you lose weight — not a permanently damaged metabolism.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: All calories affect your body the same way</h3>
+            <p class="mt-1">For weight change specifically, a calorie is a calorie — total intake is what drives gain or loss. But food source still matters for satiety, nutrient intake, and how you feel, which indirectly affects how consistently you can hit your target.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Once you calculate your number, it never needs updating</h3>
+            <p class="mt-1">Your calorie needs shift as your weight, age, activity level, and muscle mass change. A number that was accurate six months ago may be off today, especially after meaningful weight loss or gain.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Common Signs You're Under- or Over-Eating</h2>
+        <p class="mb-3">
+          If you're not sure whether your current intake is roughly right, a few signals can help:
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li><strong>Possible under-eating:</strong> persistent fatigue, difficulty concentrating, constant hunger, or unintentional weight loss</li>
+          <li><strong>Possible over-eating:</strong> steady, unintentional weight gain over several weeks despite no major lifestyle changes</li>
+          <li><strong>Likely about right:</strong> stable weight over time (accounting for normal day-to-day fluctuation), consistent energy levels, and manageable hunger between meals</li>
+        </ul>
+        <p class="mt-3">
+          These are rough signals, not diagnostic tools — tracking your weight trend over several weeks alongside your intake is a more reliable way to confirm whether your number needs adjusting.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">The Most Accurate Way to Know Your Number</h2>
+        <p>
+          General ranges are a helpful starting point, but they can't account for your specific body size, activity level, and goals. The most accurate approach is calculating your BMR and multiplying it by your actual activity level — which is exactly what our calorie calculator does, using the Mifflin-St Jeor equation, one of the most well-validated formulas for this purpose. Once you know your number, our <a href="/blog/how-to-calculate-macros" class="text-forest underline hover:text-forest-dark">macros guide</a> shows how to split it into protein, carbs, and fat.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Frequently Asked Questions</h2>
+        <div class="space-y-4 mt-3">
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Is 1,200 calories a day enough for weight loss?</h3>
+            <p class="mt-1">For most adults, 1,200 calories is considered the low end of what's safe without medical supervision, and often only appropriate for smaller or less active individuals. Many people need meaningfully more than this to lose weight safely and sustainably.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Should I eat the same number of calories every day?</h3>
+            <p class="mt-1">Not necessarily — some people prefer a consistent daily target, while others vary intake based on activity level day to day (eating more on training days, less on rest days). Both approaches can work as long as the weekly average lines up with your goal.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Do I need to recalculate my calories as I get older?</h3>
+            <p class="mt-1">Yes — since calorie needs generally decrease with age (primarily due to muscle loss), it's worth recalculating every few years, or sooner if your activity level or body composition changes significantly.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Why do two people the same age and weight need different calories?</h3>
+            <p class="mt-1">Muscle mass, genetics, and activity level all vary independently of age and weight. Someone with more muscle burns more calories at rest, and someone who moves more throughout the day burns more overall, even at the same body weight.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Is it bad to eat above my calculated number occasionally?</h3>
+            <p class="mt-1">No — a single high day has minimal effect on your overall trend. What matters most for weight change is your average intake over weeks, not perfect adherence on any individual day.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-8 p-6 bg-forest-light rounded-2xl text-center">
+        <p class="font-body text-charcoal mb-3">Ready to find your exact number?</p>
+        <a href="/" class="inline-block bg-forest text-cream font-body font-semibold px-6 py-3 rounded-full hover:bg-forest-dark transition-colors">
+          Calculate My Calories
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How Many Calories Should I Eat a Day?",
+  "description": "Learn how many calories you should eat per day based on your age, sex, and activity level, common myths, and get an exact personalized number with our free calculator.",
+  "datePublished": "2026-08-13",
+  "dateModified": "2026-08-13",
+  "author": {
+    "@type": "Organization",
+    "name": "CalorieAce"
+  }
+})}>
+</script>

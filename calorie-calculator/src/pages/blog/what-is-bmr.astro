@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+
+<Layout
+  title="What is BMR? Basal Metabolic Rate Calculator & Guide | CalorieAce"
+  description="Learn what Basal Metabolic Rate (BMR) is, why it makes up most of your daily calorie burn, common myths, and how it's calculated using the Mifflin-St Jeor equation."
+  image="/blog-bmr.webp"
+>
+  <main class="max-w-2xl mx-auto px-4 py-10">
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-charcoal leading-tight">
+      What is <span class="text-forest">BMR</span> and Why Does It Matter?
+    </h1>
+
+    <p class="mt-2 font-body text-sm text-gray-soft">Published August 13, 2026</p>
+
+    <img
+      src="/blog-bmr.webp"
+      alt="Illustration representing basal metabolic rate and resting energy expenditure"
+      class="w-full rounded-2xl mt-6"
+      width="1200"
+      height="630"
+    />
+
+    <div class="mt-6 font-body text-charcoal/90 space-y-6 leading-relaxed">
+      <p>
+        If you've used our calorie calculator, you've already seen the term BMR. Here's what it actually means, how it's calculated, the myths that confuse people about it, and why it's the foundation of every calorie number you get.
+      </p>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">What BMR Actually Measures</h2>
+        <p>
+          Basal Metabolic Rate (BMR) is the number of calories your body burns just to stay alive — breathing, circulating blood, regulating temperature, and keeping your cells functioning — while completely at rest. It doesn't include digestion or movement of any kind; it's essentially the energy cost of existing.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Why BMR Makes Up Most of Your Calorie Burn</h2>
+        <p>
+          BMR typically accounts for 60–75% of your total daily calorie burn, making it by far the biggest piece of the puzzle — bigger than exercise or digestion combined. That's why an accurate BMR estimate matters so much: get it wrong, and every calorie recommendation built on top of it will be off too.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">What the Rest of Your Calories Go Toward</h2>
+        <p class="mb-3">
+          Your total daily calorie burn (TDEE) is BMR plus two other components:
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li><strong>Physical activity</strong> — deliberate exercise plus everyday movement (walking, fidgeting, standing)</li>
+          <li><strong>Thermic effect of food</strong> — the energy your body spends digesting what you eat, roughly 10% of intake</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">What Affects Your BMR</h2>
+        <p>
+          BMR varies significantly from person to person based on lean muscle mass, height, age, and genetics — two people of the same age and weight can have BMRs that differ by 300 or more calories. Muscle tissue burns more calories at rest than fat tissue does, which is part of why BMR tends to decline with age as muscle mass naturally decreases.
+        </p>
+        <p class="mt-3">
+          Sex is another major factor: men typically have a higher BMR than women at the same weight, largely because men tend to carry more lean muscle mass on average. Body size plays a role too — taller, heavier individuals generally have higher BMRs simply because there's more tissue for the body to maintain, which is why the Mifflin-St Jeor equation factors in both height and weight directly.
+        </p>
+        <p class="mt-3">
+          Genetics also account for some of the person-to-person variation that formulas can't fully capture — thyroid function, hormone levels, and inherited traits all influence resting energy expenditure to some degree. This is part of why BMR calculators give a solid estimate rather than an exact figure, and why tracking your real-world results over a few weeks is the best way to fine-tune your number.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">How BMR Is Calculated</h2>
+        <p>
+          The gold-standard way to measure BMR precisely is in a lab, using indirect calorimetry under strict resting conditions. Since that's not practical for everyday use, well-validated equations estimate it instead — the Mifflin-St Jeor equation is widely considered the most accurate for modern populations, and it's the formula our calculator uses.
+        </p>
+        <p class="mt-3">
+          The equation differs slightly by sex, since men and women tend to carry different amounts of lean mass on average:
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-forest-light mt-3">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-forest-light">
+                <th class="px-4 py-3 font-heading font-semibold text-charcoal">Sex</th>
+                <th class="px-4 py-3 font-heading font-semibold text-charcoal">Mifflin-St Jeor Formula</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-forest-light">
+                <td class="px-4 py-3">Men</td>
+                <td class="px-4 py-3">(10 × weight in kg) + (6.25 × height in cm) − (5 × age) + 5</td>
+              </tr>
+              <tr class="border-t border-forest-light">
+                <td class="px-4 py-3">Women</td>
+                <td class="px-4 py-3">(10 × weight in kg) + (6.25 × height in cm) − (5 × age) − 161</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3">
+          For example, a 30-year-old woman who is 65 kg and 165 cm tall: (10 × 65) + (6.25 × 165) − (5 × 30) − 161 = 650 + 1,031.25 − 150 − 161 ≈ 1,370 calories/day BMR. That number is the starting point — the next step is multiplying by an activity multiplier to get full daily calorie needs.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Common BMR Myths</h2>
+        <div class="space-y-4 mt-3">
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: BMR is the number of calories you should eat</h3>
+            <p class="mt-1">BMR only reflects calories burned at complete rest — it doesn't include activity or digestion. Eating at your BMR level, rather than your full TDEE, is essentially eating as if you never moved all day, which is too low for almost everyone.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: You can permanently damage or "slow down" your metabolism through dieting</h3>
+            <p class="mt-1">Extended severe restriction can modestly lower BMR temporarily, an effect called adaptive thermogenesis, but true long-term metabolic damage from dieting is rare and typically reverses once eating returns to normal.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Certain foods or supplements can significantly boost your BMR</h3>
+            <p class="mt-1">Foods like chili peppers, green tea, or caffeine have a measurable but tiny effect on metabolism — nowhere near enough to meaningfully change your calorie needs. BMR is driven mainly by body size and muscle mass, not diet tricks.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Eating more frequently (small meals) speeds up your metabolism</h3>
+            <p class="mt-1">Meal frequency has little to no effect on BMR or total daily calorie burn. What matters for weight and metabolism is total calorie intake over the day, not how many meals it's split across.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: BMR is fixed and never changes</h3>
+            <p class="mt-1">BMR shifts as your weight, age, and muscle mass change — it typically decreases somewhat as you lose weight (since you have less tissue to maintain) and can increase if you build muscle. It's worth recalculating periodically, not treating as a one-time number.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">From BMR to Your Daily Number</h2>
+        <p>
+          BMR alone isn't the number you should eat — it's the starting point. Multiplying it by an activity multiplier gives your full maintenance calories (TDEE), which is what actually determines whether you gain, maintain, or lose weight. For a full breakdown of typical daily calorie ranges by age and activity level, see our guide on <a href="/blog/how-many-calories-per-day" class="text-forest underline hover:text-forest-dark">how many calories you should eat per day</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Building or Losing? BMR Still Matters</h2>
+        <p>
+          Whether your goal is weight loss or weight gain, BMR is the anchor your entire calorie target is built on. Our guides on <a href="/blog/calorie-deficit-explained" class="text-forest underline hover:text-forest-dark">calorie deficits</a> and <a href="/blog/calorie-surplus-explained" class="text-forest underline hover:text-forest-dark">calorie surpluses</a> both start from the same TDEE calculation described here — the only difference is which direction you adjust from maintenance.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Frequently Asked Questions</h2>
+        <div class="space-y-4 mt-3">
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Is BMR the same as TDEE?</h3>
+            <p class="mt-1">No — BMR is only the calories burned at complete rest. TDEE (Total Daily Energy Expenditure) adds activity and digestion on top of BMR, giving your full daily calorie burn.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Can I increase my BMR?</h3>
+            <p class="mt-1">Yes, primarily by building muscle mass through resistance training — muscle tissue burns more calories at rest than fat tissue, so more muscle means a higher BMR over time.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Why does BMR decrease with age?</h3>
+            <p class="mt-1">Mostly due to a gradual, natural loss of muscle mass over the years (sarcopenia), which lowers the resting energy cost of maintaining your body. Staying active and strength training can significantly slow this decline.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">How accurate are online BMR calculators?</h3>
+            <p class="mt-1">Formulas like Mifflin-St Jeor are typically accurate within about 10% for most people, which is good enough for practical use. Only lab-based indirect calorimetry gives a truly precise measurement, and it's rarely necessary for everyday goals.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Does BMR differ a lot between individuals of the same weight?</h3>
+            <p class="mt-1">Yes — body composition matters more than total weight. Two people at the same weight but different muscle-to-fat ratios can have noticeably different BMRs, since muscle is more metabolically active than fat.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Should I eat below my BMR to lose weight faster?</h3>
+            <p class="mt-1">No — eating below BMR for extended periods risks nutrient deficiencies, excessive muscle loss, and hormonal disruption. A safe deficit comes from eating below your full TDEE, not below your BMR, which represents the bare minimum your body needs at complete rest.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-8 p-6 bg-forest-light rounded-2xl text-center">
+        <p class="font-body text-charcoal mb-3">Ready to calculate your BMR and daily calorie needs?</p>
+        <a href="/" class="inline-block bg-forest text-cream font-body font-semibold px-6 py-3 rounded-full hover:bg-forest-dark transition-colors">
+          Calculate My Calories
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What is BMR and Why Does It Matter?",
+  "description": "Learn what Basal Metabolic Rate (BMR) is, why it makes up most of your daily calorie burn, common myths, and how it's calculated using the Mifflin-St Jeor equation.",
+  "datePublished": "2026-08-13",
+  "dateModified": "2026-08-13",
+  "author": {
+    "@type": "Organization",
+    "name": "CalorieAce"
+  }
+})}>
+</script>

@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="How to Calculate Your Macros - Protein, Carbs & Fat | CalorieAce"
+  description="Learn how to calculate your macros using the 4-4-9 method, what a reasonable protein/carb/fat split looks like, and why macro tracking matters beyond just hitting a calorie target."
+  image="/blog-macros.webp"
+>
+  <main class="max-w-2xl mx-auto px-4 py-10">
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-charcoal leading-tight">
+      How to Calculate Your <span class="text-forest">Macros</span> (Protein, Carbs, Fat)
+    </h1>
+
+    <p class="mt-2 font-body text-sm text-gray-soft">Published August 13, 2026</p>
+
+    <img
+      src="/blog-macros.webp"
+      alt="Illustration representing protein, carbs, and fat macronutrient balance"
+      class="w-full rounded-2xl mt-6"
+      width="1200"
+      height="630"
+    />
+
+    <div class="mt-6 font-body text-charcoal/90 space-y-6 leading-relaxed">
+      <p>
+        If you've seen your calorie result broken down into protein, carbs, and fat grams, here's exactly how that math works — and why it matters beyond just hitting a calorie number. Below is a full breakdown of the formulas, common macro splits by goal, the myths that trip people up, and how to actually apply this day to day.
+      </p>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">What Macros Actually Are</h2>
+        <p>
+          "Macros" is short for macronutrients — the three types of nutrients that provide your body with energy: protein, carbohydrates, and fat. Every calorie you eat comes from one of these three (alcohol is technically a fourth, but it's not part of standard macro tracking).
+        </p>
+        <p class="mt-3">
+          Each macronutrient does more than just supply energy. Protein builds and repairs tissue (including muscle), carbohydrates are the body's preferred fuel source for the brain and high-intensity exercise, and fat supports hormone production and the absorption of certain vitamins. That's part of why extremely restricting any one of them, even while hitting your calorie target, can cause problems over time.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">The 4-4-9 Method</h2>
+        <p>
+          Each macronutrient converts to energy at a fixed rate: protein provides 4 calories per gram, carbohydrates provide 4 calories per gram, and fat provides 9 calories per gram. This is called the 4-4-9 method, and it's the standard nutrition professionals use to convert between calories and grams. Fat's higher rate is why fatty foods tend to be more calorie-dense than an equivalent weight of protein or carbs — a gram of fat carries more than double the energy of a gram of either other macro.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">How to Go From Calories to Grams</h2>
+        <p class="mb-3">
+          Once you know your daily calorie target and your desired macro split (as percentages), the math is straightforward:
+        </p>
+        <ul class="list-disc pl-6 space-y-1 mb-3">
+          <li><strong>Protein (g)</strong> = (calories × protein%) ÷ 4</li>
+          <li><strong>Carbs (g)</strong> = (calories × carb%) ÷ 4</li>
+          <li><strong>Fat (g)</strong> = (calories × fat%) ÷ 9</li>
+        </ul>
+        <p>
+          For example, on a 2,000-calorie target with a 30/40/30 split: 2,000 × 0.30 ÷ 4 = 150g protein, 2,000 × 0.40 ÷ 4 = 200g carbs, and 2,000 × 0.30 ÷ 9 ≈ 67g fat.
+        </p>
+        <p class="mt-3">
+          As a second example, on a smaller 1,600-calorie target with a higher-protein 35/35/30 split: 1,600 × 0.35 ÷ 4 = 140g protein, 1,600 × 0.35 ÷ 4 = 140g carbs, and 1,600 × 0.30 ÷ 9 ≈ 53g fat. The formulas stay the same regardless of your calorie target — only the inputs change.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Macro Grams at a Glance</h2>
+        <p class="mb-3">
+          Here's how a balanced 30/40/30 split translates into grams across a few common calorie targets. Use this as a quick reference — the calculator further down gives you an exact personalized number.
+        </p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="border-b border-forest-light">
+                <th class="text-left py-2 pr-4 font-heading text-charcoal">Calories/day</th>
+                <th class="text-left py-2 pr-4 font-heading text-charcoal">Protein (g)</th>
+                <th class="text-left py-2 pr-4 font-heading text-charcoal">Carbs (g)</th>
+                <th class="text-left py-2 font-heading text-charcoal">Fat (g)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-forest-light/50">
+                <td class="py-2 pr-4">1,400</td>
+                <td class="py-2 pr-4">105</td>
+                <td class="py-2 pr-4">140</td>
+                <td class="py-2">47</td>
+              </tr>
+              <tr class="border-b border-forest-light/50">
+                <td class="py-2 pr-4">1,800</td>
+                <td class="py-2 pr-4">135</td>
+                <td class="py-2 pr-4">180</td>
+                <td class="py-2">60</td>
+              </tr>
+              <tr class="border-b border-forest-light/50">
+                <td class="py-2 pr-4">2,000</td>
+                <td class="py-2 pr-4">150</td>
+                <td class="py-2 pr-4">200</td>
+                <td class="py-2">67</td>
+              </tr>
+              <tr class="border-b border-forest-light/50">
+                <td class="py-2 pr-4">2,400</td>
+                <td class="py-2 pr-4">180</td>
+                <td class="py-2 pr-4">240</td>
+                <td class="py-2">80</td>
+              </tr>
+              <tr>
+                <td class="py-2 pr-4">2,800</td>
+                <td class="py-2 pr-4">210</td>
+                <td class="py-2 pr-4">280</td>
+                <td class="py-2">93</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-sm text-gray-soft">
+          Figures rounded to the nearest gram using a 30% protein / 40% carbs / 30% fat split.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">What's a Reasonable Split?</h2>
+        <p>
+          There's no single universal ratio — the Institute of Medicine's general guidelines suggest 10–35% of calories from protein, 45–65% from carbohydrates, and 20–35% from fat, giving plenty of room depending on your goals and preferences. A balanced 30/40/30 split (protein/carbs/fat) is a solid, general-purpose starting point that works well for most people without being extreme in any direction.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Adjusting Your Split by Goal</h2>
+        <p class="mb-3">
+          While 30/40/30 works as a default, some goals benefit from tilting the ratio:
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li><strong>Weight loss:</strong> a higher protein share (35–40%) helps preserve muscle mass in a deficit and tends to improve satiety, making the deficit easier to stick to.</li>
+          <li><strong>Muscle gain:</strong> protein around 25–30% alongside adequate carbs supports both muscle repair and training performance, since carbohydrates fuel higher-intensity workouts.</li>
+          <li><strong>Endurance training:</strong> a higher carbohydrate share (50%+) supports the sustained energy demands of longer training sessions.</li>
+        </ul>
+        <p class="mt-3">
+          These are starting points, not rigid rules — personal preference, food tolerance, and how you feel on a given split all matter too.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Why It's Worth Paying Attention To</h2>
+        <p>
+          Hitting your calorie target alone doesn't guarantee good results — two people eating the same 2,000 calories with very different macro splits will feel and perform differently. Protein in particular plays a key role in preserving muscle during weight loss and supporting recovery during weight gain, which is why it's often prioritized regardless of your overall goal. A common practical approach is to set protein first (since it has the narrowest useful range), then split the remaining calories between carbs and fat based on personal preference and activity level.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Common Myths About Macros</h2>
+
+        <div class="space-y-4 mt-3">
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Carbs make you gain fat</h3>
+            <p class="mt-1">Carbohydrates themselves don't cause fat gain — an overall calorie surplus does, regardless of which macro it comes from. Carbs are often blamed because refined carb-heavy foods are easy to overeat, not because of anything unique about carbohydrates as a nutrient.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: You need to eat protein immediately after a workout</h3>
+            <p class="mt-1">The so-called "anabolic window" is far wider than once believed — total daily protein intake matters much more than precise post-workout timing for most people. Eating protein within a few hours of training is fine, but there's no need to rush.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: Low-fat is always healthier</h3>
+            <p class="mt-1">Dietary fat is essential for hormone production and vitamin absorption, and very low-fat diets can cause deficiencies over time. Fat isn't inherently "bad" — total calories and food quality matter more than avoiding any single macro.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Myth: There's one perfect macro split for everyone</h3>
+            <p class="mt-1">The right split depends on your goal, training style, and personal preference — a split that works well for an endurance athlete may not suit someone focused on strength training or general health. Ranges, not fixed numbers, are the honest answer.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Tracking Macros in Practice</h2>
+        <p>
+          Most food labels list grams of protein, carbs, and fat directly, making it possible to track macros using the same nutrition labels you'd check for calories. Many people find it easier to hit protein and calorie targets consistently while treating the carb/fat split more loosely day to day, since total calories and protein tend to matter most for body composition outcomes, with the carb/fat ratio being more about personal preference and performance than a strict requirement.
+        </p>
+        <p class="mt-3">
+          A simple way to start: pick 3-4 protein-rich foods you already eat regularly (eggs, chicken, yogurt, lentils, tofu) and build meals around hitting your protein number first. Once protein is consistently on target, layer in carbs and fat based on what keeps you satisfied and energized.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">See Your Own Macros</h2>
+        <p>
+          You don't need to do this math by hand — our calorie calculator automatically breaks your daily calorie target into protein, carbs, and fat grams using the same 4-4-9 method, based on a balanced 30/40/30 split. If you're working toward a specific weight goal, the calculator's Roadmap feature also generates a sample meal plan built around your protein target.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-2xl font-bold text-charcoal mb-2">Frequently Asked Questions</h2>
+        <div class="space-y-4 mt-3">
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Do I need to track macros exactly, down to the gram?</h3>
+            <p class="mt-1">Not necessarily — for most people, getting reasonably close to macro targets most days matters far more than hitting exact numbers every single day. Precision matters more for competitive athletes or physique-specific goals.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Which macro is most important to prioritize?</h3>
+            <p class="mt-1">Protein is generally considered the most important to hit consistently, since it directly affects muscle preservation and growth, and has a narrower optimal range than carbs or fat.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Can I lose weight without tracking macros at all?</h3>
+            <p class="mt-1">Yes — total calorie intake is what primarily determines weight change. Macros affect how you feel, perform, and how much muscle you retain along the way, but tracking calories alone can still produce weight loss.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Is it okay to eat different macros on different days?</h3>
+            <p class="mt-1">Yes — many people naturally eat more carbs on training days and less on rest days, or vary their split based on what's available. What matters most is your average intake over the week aligning with your overall goal.</p>
+          </div>
+          <div>
+            <h3 class="font-heading text-lg font-semibold text-charcoal">Do I need to recalculate my macros if my weight changes?</h3>
+            <p class="mt-1">Yes — since your macro targets are based on your daily calorie number, any meaningful change in weight, activity level, or goal should prompt a recalculation, just like with your overall calorie target.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-8 p-6 bg-forest-light rounded-2xl text-center">
+        <p class="font-body text-charcoal mb-3">Ready to calculate your calories and macros?</p>
+        <a href="/" class="inline-block bg-forest text-cream font-body font-semibold px-6 py-3 rounded-full hover:bg-forest-dark transition-colors">
+          Calculate My Calories
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Calculate Your Macros (Protein, Carbs, Fat)",
+  "description": "Learn how to calculate your macros using the 4-4-9 method, what a reasonable protein/carb/fat split looks like, and why macros matter beyond just hitting a calorie target.",
+  "datePublished": "2026-08-13",
+  "dateModified": "2026-08-16",
+  "author": {
+    "@type": "Organization",
+    "name": "CalorieAce"
+  }
+})}>
+</script>
